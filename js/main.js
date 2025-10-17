@@ -1,43 +1,36 @@
 // Louvado seja o Senhor
-
-let saldo = 3000;
-const saldoExibido = document.querySelector('.saldo-valor .valor');
-
-saldoExibido.textContent = `R$ ${saldo}`;
-
-const form = document.querySelector('.block-nova-transacao form');
-form.addEventListener("submit", function(event){
+var saldo = 3000;
+var saldoExibido = document.querySelector('.saldo-valor .valor');
+saldoExibido.textContent = "R$ ".concat(saldo);
+var form = document.querySelector('.block-nova-transacao form');
+form.addEventListener("submit", function (event) {
     event.preventDefault();
-    if(!form.checkValidity()){
+    if (!form.checkValidity()) {
         alert("Por favor, preencha o formulário corretamente!");
         return;
     }
-    
-    const tipoTransacaoInput = document.querySelector('#tipoTransacao');
-    const valorTransacaoInput = document.querySelector('#valor');
-    const dataTransacaoInput = document.querySelector('#data');
-    
-    let tipoTransacao = tipoTransacaoInput.value;
-    let valorTransacao = valorTransacaoInput.value;
-    let dataTransacao = dataTransacaoInput.value;
-
-    if(tipoTransacao == 'Depósito'){
-        saldo += parseFloat(valorTransacao);
-    } else if(tipoTransacao == 'Transferência' || tipoTransacao == 'Pagamento de Boleto'){
-        saldo -= parseFloat(valorTransacao);
-    } else{
+    var tipoTransacaoInput = document.querySelector('#tipoTransacao');
+    var valorTransacaoInput = document.querySelector('#valor');
+    var dataTransacaoInput = document.querySelector('#data');
+    var tipoTransacao = tipoTransacaoInput.value;
+    var valorTransacao = parseFloat(valorTransacaoInput.value);
+    var dataTransacao = new Date(dataTransacaoInput.value);
+    if (tipoTransacao == 'Depósito') {
+        saldo += valorTransacao;
+    }
+    else if (tipoTransacao == 'Transferência' || tipoTransacao == 'Pagamento de Boleto') {
+        saldo -= valorTransacao;
+    }
+    else {
         alert("Tipo de transação inválido!");
         return;
     }
-
-    saldoExibido.textContent = `R$ ${saldo}`;
-    
-    const novaTransacao = {
+    saldoExibido.textContent = "R$ ".concat(saldo);
+    var novaTransacao = {
         tipoTransacao: tipoTransacao,
         valorTransacao: valorTransacao,
-        dataTransacao: dataTransacao    
+        dataTransacao: dataTransacao
     };
-
     console.log(novaTransacao);
     form.reset();
 });
