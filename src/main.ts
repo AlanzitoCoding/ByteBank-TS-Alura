@@ -1,6 +1,7 @@
 // Louvado seja o Senhor
 
 let saldo = 3000;
+
 const saldoExibido = document.querySelector('.saldo-valor .valor') as HTMLElement;
 saldoExibido.textContent = `R$ ${saldo}`;
 
@@ -12,7 +13,7 @@ form.addEventListener("submit", function(event){
         return;
     }
     
-    const tipoTransacaoInput = document.querySelector('#tipoTransacao') as HTMLInputElement;
+    const tipoTransacaoInput = document.querySelector('#tipoTransacao') as HTMLSelectElement;
     const valorTransacaoInput = document.querySelector('#valor') as HTMLInputElement;
     const dataTransacaoInput = document.querySelector('#data') as HTMLInputElement;
     
@@ -23,7 +24,11 @@ form.addEventListener("submit", function(event){
     if(tipoTransacao == 'Depósito'){
         saldo += valorTransacao;
     } else if(tipoTransacao == 'Transferência' || tipoTransacao == 'Pagamento de Boleto'){
-        saldo -= valorTransacao;
+        if(saldo - valorTransacao >= 0){
+            saldo -= valorTransacao;
+        } else {
+            alert("Saldo insuficiente!");
+        }
     } else{
         alert("Tipo de transação inválido!");
         return;

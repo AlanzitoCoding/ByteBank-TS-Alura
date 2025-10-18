@@ -1,2 +1,0 @@
-// Louvado seja o Senhor
-
