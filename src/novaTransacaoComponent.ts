@@ -1,10 +1,5 @@
 // Louvado seja o Senhor
 
-let saldo = 3000;
-
-const saldoExibido = document.querySelector('.saldo-valor .valor') as HTMLElement;
-saldoExibido.textContent = `R$ ${saldo}`;
-
 const form = document.querySelector('.block-nova-transacao form') as HTMLFormElement;
 form.addEventListener("submit", function(event){
     event.preventDefault();
@@ -17,13 +12,13 @@ form.addEventListener("submit", function(event){
     const valorTransacaoInput = document.querySelector('#valor') as HTMLInputElement;
     const dataTransacaoInput = document.querySelector('#data') as HTMLInputElement;
     
-    let tipoTransacao : string = tipoTransacaoInput.value;
+    let tipoTransacao : TipoTransacao = tipoTransacaoInput.value as TipoTransacao;
     let valorTransacao : number = parseFloat(valorTransacaoInput.value);
     let dataTransacao : Date = new Date(dataTransacaoInput.value);
 
-    if(tipoTransacao == 'Depósito'){
+    if(tipoTransacao == TipoTransacao.deposito){
         saldo += valorTransacao;
-    } else if(tipoTransacao == 'Transferência' || tipoTransacao == 'Pagamento de Boleto'){
+    } else if(tipoTransacao == TipoTransacao.transferencia || tipoTransacao == TipoTransacao.pagBoleto){
         if(saldo - valorTransacao >= 0){
             saldo -= valorTransacao;
         } else {
@@ -34,9 +29,9 @@ form.addEventListener("submit", function(event){
         return;
     }
 
-    saldoExibido.textContent = `R$ ${saldo}`;
+    saldoExibido.textContent = saldo.toLocaleString("pt-br", {currency: "BRL", style: "currency"});
     
-    const novaTransacao = {
+    const novaTransacao : Transacao = {
         tipoTransacao: tipoTransacao,
         valorTransacao: valorTransacao,
         dataTransacao: dataTransacao    

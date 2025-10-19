@@ -1,7 +1,4 @@
 // Louvado seja o Senhor
-let saldo = 3000;
-const saldoExibido = document.querySelector('.saldo-valor .valor');
-saldoExibido.textContent = `R$ ${saldo}`;
 const form = document.querySelector('.block-nova-transacao form');
 form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -15,10 +12,10 @@ form.addEventListener("submit", function (event) {
     let tipoTransacao = tipoTransacaoInput.value;
     let valorTransacao = parseFloat(valorTransacaoInput.value);
     let dataTransacao = new Date(dataTransacaoInput.value);
-    if (tipoTransacao == 'Depósito') {
+    if (tipoTransacao == TipoTransacao.deposito) {
         saldo += valorTransacao;
     }
-    else if (tipoTransacao == 'Transferência' || tipoTransacao == 'Pagamento de Boleto') {
+    else if (tipoTransacao == TipoTransacao.transferencia || tipoTransacao == TipoTransacao.pagBoleto) {
         if (saldo - valorTransacao >= 0) {
             saldo -= valorTransacao;
         }
@@ -30,7 +27,7 @@ form.addEventListener("submit", function (event) {
         alert("Tipo de transação inválido!");
         return;
     }
-    saldoExibido.textContent = `R$ ${saldo}`;
+    saldoExibido.textContent = saldo.toLocaleString("pt-br", { currency: "BRL", style: "currency" });
     const novaTransacao = {
         tipoTransacao: tipoTransacao,
         valorTransacao: valorTransacao,
