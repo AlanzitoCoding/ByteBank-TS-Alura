@@ -29,7 +29,7 @@ form.addEventListener("submit", function(event){
         return;
     }
 
-    saldoExibido.textContent = saldo.toLocaleString("pt-br", {currency: "BRL", style: "currency"});
+    saldoExibido.textContent = formatarMoeda(saldo);
     
     const novaTransacao : Transacao = {
         tipoTransacao: tipoTransacao,
