@@ -1,6 +1,8 @@
 // Louvado seja o Senhor
 
-type Transacao = {
+import { TipoTransacao } from "./TipoTransacao.js"
+
+export type Transacao = {
     tipoTransacao : TipoTransacao,
     valorTransacao : number,
     dataTransacao : Date

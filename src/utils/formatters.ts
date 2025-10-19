@@ -1,10 +1,12 @@
 // Louvado seja o Senhor
 
-function formatarMoeda(valor : number) : string {
+import { FormatData } from "../types/FormatData.js";
+
+export function formatarMoeda(valor : number) : string {
     return valor.toLocaleString("pt-br", {currency: "BRL", style: "currency"});
 }
 
-function formatarData(data : Date, formato : FormatData = FormatData.standard) : string {
+export function formatarData(data : Date, formato : FormatData = FormatData.standard) : string {
     if(formato == FormatData.longDate){
         return data.toLocaleDateString("pt-br", {
             weekday: "long", 

@@ -1,5 +1,5 @@
 // Louvado seja o Senhor 
-var FormatData;
+export var FormatData;
 (function (FormatData) {
     FormatData["standard"] = "DD/MM/AAAA";
     FormatData["longDate"] = "WEEKDAY, DD/MM/AAAA";

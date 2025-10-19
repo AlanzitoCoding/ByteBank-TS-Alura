@@ -1,6 +1,6 @@
 // Louvado seja o Senhor 
 
-enum FormatData{
+export enum FormatData{
     standard = "DD/MM/AAAA",
     longDate = "WEEKDAY, DD/MM/AAAA",
     shortDate = "DD/MM"

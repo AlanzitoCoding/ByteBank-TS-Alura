@@ -1,5 +1,10 @@
 // Louvado seja o Senhor
 
+import Conta from "../types/Conta.js";
+import { TipoTransacao } from "../types/TipoTransacao.js";
+import { Transacao } from "../types/Transacao.js";
+import SaldoComponent from "./saldoComponent.js";
+
 const form = document.querySelector('.block-nova-transacao form') as HTMLFormElement;
 form.addEventListener("submit", function(event){
     event.preventDefault();
@@ -15,21 +20,6 @@ form.addEventListener("submit", function(event){
     let tipoTransacao : TipoTransacao = tipoTransacaoInput.value as TipoTransacao;
     let valorTransacao : number = parseFloat(valorTransacaoInput.value);
     let dataTransacao : Date = new Date(dataTransacaoInput.value);
-
-    if(tipoTransacao == TipoTransacao.deposito){
-        saldo += valorTransacao;
-    } else if(tipoTransacao == TipoTransacao.transferencia || tipoTransacao == TipoTransacao.pagBoleto){
-        if(saldo - valorTransacao >= 0){
-            saldo -= valorTransacao;
-        } else {
-            alert("Saldo insuficiente!");
-        }
-    } else{
-        alert("Tipo de transação inválido!");
-        return;
-    }
-
-    saldoExibido.textContent = formatarMoeda(saldo);
     
     const novaTransacao : Transacao = {
         tipoTransacao: tipoTransacao,
@@ -37,6 +27,7 @@ form.addEventListener("submit", function(event){
         dataTransacao: dataTransacao    
     };
 
-    console.log(novaTransacao);
+    Conta.registrarTransacao(novaTransacao);
+    SaldoComponent.atualizar();
     form.reset();
 });
