@@ -1,5 +1,6 @@
 // Louvado seja o Senhor
 import Conta from "../types/Conta.js";
+import ExtratoComponent from "./extratoComponent.js";
 import SaldoComponent from "./saldoComponent.js";
 const form = document.querySelector('.block-nova-transacao form');
 form.addEventListener("submit", function (event) {
@@ -14,7 +15,7 @@ form.addEventListener("submit", function (event) {
         const dataTransacaoInput = document.querySelector('#data');
         let tipoTransacao = tipoTransacaoInput.value;
         let valorTransacao = parseFloat(valorTransacaoInput.value);
-        let dataTransacao = new Date(dataTransacaoInput.value);
+        let dataTransacao = new Date(dataTransacaoInput.value + " 00:00:00");
         const novaTransacao = {
             tipoTransacao: tipoTransacao,
             valorTransacao: valorTransacao,
@@ -22,6 +23,7 @@ form.addEventListener("submit", function (event) {
         };
         Conta.registrarTransacao(novaTransacao);
         SaldoComponent.atualizar();
+        ExtratoComponent.update();
         form.reset();
     }
     catch (err) {

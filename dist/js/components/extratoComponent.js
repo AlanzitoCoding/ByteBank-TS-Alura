@@ -35,3 +35,9 @@ function renderExtrato() {
     }
     registroTransacoesDiv.innerHTML = htmlRegistroTransacoes;
 }
+const ExtratoComponent = {
+    update() {
+        renderExtrato();
+    }
+};
+export default ExtratoComponent;

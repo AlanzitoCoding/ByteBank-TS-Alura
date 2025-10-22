@@ -73,6 +73,7 @@ const Conta = {
 
         else if(novaTransacao.tipoTransacao == TipoTransacao.transferencia || novaTransacao.tipoTransacao == TipoTransacao.pagBoleto){
             debitar(novaTransacao.valorTransacao);
+            novaTransacao.valorTransacao *= -1;
         } 
 
         else{
