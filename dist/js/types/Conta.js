@@ -7,6 +7,7 @@ const transacoes = JSON.parse(localStorage.getItem("transacoes"), (key, value) =
     }
     return value;
 }) || [];
+const resumoTransacoes = JSON.parse(localStorage.getItem("resumoTransacoes"), (value) => { return parseInt(value); }) || [];
 function debitar(valor) {
     if (valor <= 0) {
         throw new Error("O valor deve ser maior que zero!");
@@ -23,6 +24,17 @@ function depositar(valor) {
     }
     saldo += valor;
     localStorage.setItem("saldo", JSON.stringify(saldo));
+}
+function guardarResumoTransacao(transacao) {
+    if (transacao.tipoTransacao == TipoTransacao.deposito) {
+        return resumoTransacoes.totalDepositos++;
+    }
+    else if (transacao.tipoTransacao == TipoTransacao.transferencia) {
+        return resumoTransacoes.totalTransferencias++;
+    }
+    else if (transacao.tipoTransacao == TipoTransacao.pagBoleto) {
+        return resumoTransacoes.totalPagamentosBoleto++;
+    }
 }
 const Conta = {
     getSaldo() {
@@ -60,9 +72,12 @@ const Conta = {
         else {
             throw new Error("Tipo de transação inválido!");
         }
+        guardarResumoTransacao(novaTransacao);
         transacoes.push(novaTransacao);
         console.log(this.getGruposTransacoes());
         localStorage.setItem("transacoes", JSON.stringify(transacoes));
+        localStorage.setItem("resumoTransacoes", JSON.stringify(resumoTransacoes));
+        console.log(guardarResumoTransacao(novaTransacao));
     }
 };
 export default Conta;

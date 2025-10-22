@@ -3,6 +3,7 @@
 import { Transacao } from "./Transacao.js";
 import { TipoTransacao } from "./TipoTransacao.js";
 import { GrupoTransacao } from "./GrupoTransacao.js";
+import { ResumoTransacoes } from "./ResumoTransacoes.js";
 
 let saldo : number = JSON.parse(localStorage.getItem("saldo")) || 0;
 const transacoes : Transacao[] = JSON.parse(localStorage.getItem("transacoes"), (key : string, value : string) => {
@@ -12,6 +13,7 @@ const transacoes : Transacao[] = JSON.parse(localStorage.getItem("transacoes"), 
 
     return value;
 }) || [];
+const resumoTransacoes : ResumoTransacoes = JSON.parse(localStorage.getItem("resumoTransacoes"), (value : string) => { return parseInt(value); }) || [];
 
 function debitar(valor : number) : void{
     if(valor <= 0){
@@ -32,6 +34,18 @@ function depositar(valor : number) : void{
 
     saldo += valor;
     localStorage.setItem("saldo", JSON.stringify(saldo));
+}
+
+function guardarResumoTransacao(transacao : Transacao) : number{
+    if(transacao.tipoTransacao == TipoTransacao.deposito){
+        return resumoTransacoes.totalDepositos++;
+    }
+    else if(transacao.tipoTransacao == TipoTransacao.transferencia){
+        return resumoTransacoes.totalTransferencias++;
+    }
+    else if(transacao.tipoTransacao == TipoTransacao.pagBoleto){
+        return resumoTransacoes.totalPagamentosBoleto++;
+    }
 }
 
 const Conta = {
@@ -80,9 +94,14 @@ const Conta = {
             throw new Error("Tipo de transação inválido!");
         }
 
+        guardarResumoTransacao(novaTransacao);
         transacoes.push(novaTransacao);
         console.log(this.getGruposTransacoes());
+
         localStorage.setItem("transacoes", JSON.stringify(transacoes));
+        localStorage.setItem("resumoTransacoes", JSON.stringify(resumoTransacoes));
+
+        console.log(guardarResumoTransacao(novaTransacao));
     }
 }
 
